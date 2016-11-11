@@ -1,0 +1,51 @@
+OCaml
+------
+
+Immutability by default
+	most languages are mutable by default
+	every variable is immutable
+	can't change the value after initialization
+
+has a value that represents a mutable memory location
+	"reference"
+	an opaque pointer
+
+	ref e: creates a new memory location and stores the value of e in it
+	!e: evaluate e to some reference and then get its contents
+	e1 := e2
+		evaluate e1 to some reference r
+		evaluate e2 to some mvalue v
+		update the contents of r to v
+
+let counter =
+	let c = ref 0 in
+		((function () -> !c), (function () -> c := !c + 1));;
+
+ref 0 -> int ref
+
+let add xy = x + y;;
+int -> int -> int
+let add (x,y) = x + y;;
+int * int -> int
+
+let add2 (x,y) = (r:= -1); x+y;
+int * int -> int
+
+r;;
+- int ref 0
+add(3,4);;
+- int 7
+r;;
+- int ref 0
+add2 (3,4)
+-int 7
+r;;
+- int ref -1
+
+compiler won't see difference between add and add2 even though there is an important difference between the two.
+
+
+
+(3) Error-prone
+	Easy to get out of step
+	Must be careful not to eval responses too eagerly
